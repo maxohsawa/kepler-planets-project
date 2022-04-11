@@ -1,7 +1,7 @@
 const { parse } = require('csv-parse');
 const fs = require('fs');
 
-const results = [];
+const habitablePlanets = [];
 
 /*
   - koi_disposition represents whether the planet has been CONFIRMED
@@ -21,12 +21,14 @@ fs.createReadStream('kepler_data.csv')
   }))
   .on('data', (data) => {
     if (isHabitablePlanet(data)) {
-      results.push(data);
+      habitablePlanets.push(data);
     }
   })
   .on('end', () => {
-    console.log(results);
-    console.log(`${results.length} habitable planets found!`);
+    console.log(habitablePlanets.map( (planet) => { 
+      return planet['kepler_name'];
+    }));
+    console.log(`${habitablePlanets.length} habitable planets found!`);
   })
   .on('error', (err) => {
     console.log(err);
